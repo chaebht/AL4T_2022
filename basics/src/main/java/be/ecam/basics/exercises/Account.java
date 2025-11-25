@@ -3,29 +3,36 @@ package be.ecam.basics.exercises;
 import java.util.Objects;
 
 public class Account {
-    private double balance;
+
+    // balance stocké en centimes pour éviter les erreurs de double
+    private int balanceInCents;
 
     public Account() {
         this(0.0);
     }
 
     public Account(double initial) {
-        this.balance = initial;
+        this.balanceInCents = toCents(initial);
+    }
+
+    private int toCents(double amount) {
+        return (int) Math.round(amount * 100);
     }
 
     public double getBalance() {
-        return balance;
+        return balanceInCents / 100.0;
     }
 
     public void deposit(double amount) {
         if (amount < 0) throw new IllegalArgumentException("amount");
-        balance += amount;
+        balanceInCents += toCents(amount);
     }
 
     public void withdraw(double amount) {
         if (amount < 0) throw new IllegalArgumentException("amount");
-        if (amount > balance) throw new IllegalStateException("insufficient");
-        balance -= amount;
+        int cents = toCents(amount);
+        if (cents > balanceInCents) throw new IllegalStateException("insufficient");
+        balanceInCents -= cents;
     }
 
     public void transferTo(Account other, double amount) {

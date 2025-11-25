@@ -17,6 +17,8 @@ public class Catalog {
     }
 
     public static int countTags(Product p) {
-        return p.getTags().size();
+        List<String> tags = p.getTags();
+        if (tags == null) return 0;  // <-- traitement des null
+        return tags.size();
     }
 }
