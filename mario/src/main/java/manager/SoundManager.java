@@ -13,6 +13,9 @@ public class SoundManager implements ISoundManager {
 
     public SoundManager() {
         background = getClip(loadAudio("background"));
+        if (background != null) {
+            background.loop(Clip.LOOP_CONTINUOUSLY); //fait tourner en boucle la musique de fond 
+        }
     }
 
     private AudioInputStream loadAudio(String url) {
